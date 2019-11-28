@@ -1,0 +1,30 @@
+- atualização da rede é algoritmo genético
+- tratar borda como parede
+- primeira leva de pesos é aletória (entre -1 e 1)
+- X é a entrada (células vizinhas ao agente)
+- W são os pesos
+- Y é a saída (célula pra onde o agente vai)
+- cromossomo tem 40 genes (40 pesos)
+- geração e população são parametrizáveis
+- instanciar uma rede neural para cada cromossomo
+- instanciar um labirinto para cada cromossomo
+- ver qual neurônio de saída deu o valor mais alto, ele decide o que o agente vai fazer
+- se for parede, acaba o jogo pra esse cromossomo e calcula a função de aptidão
+- se for caminho ou moeda, roda a rede de novo com os mesmos pesos do cromossomo, mas os vizinhos serão diferentes
+- elitismo e torneio segue igual
+- crossover é com média aritmética posição por posição
+- cria nova população e repete o processo
+- mutação é aletória
+- transformar moeda em caminho vazio ao passar por ela
+
+
+FUNÇÃO DE APTIDÃO
+
+- começar com um número positivo alto, estimando quanto ele ganharia até chegar na saída
+- quanto mais próximo de 0 melhor
+- bater na parede penaliza forte
+- array por onde passou (penaliza ciclo)
+- caminhar certo seguido serve como multiplicador para pontuação
+- pegar moeda vale bastante, mas menos do que achar a saída
+- achar a saída deve valer muito
+- se passar por um lugar novamente, penaliza e quebra o multiplicador
