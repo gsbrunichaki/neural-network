@@ -1,0 +1,8 @@
+module.exports = {
+  GENERATIONS: 0,
+  GENES: 40,
+  INITIAL_FITNESS: 20000,
+  MIN_WEIGHT: -1,
+  MAX_WEIGHT: 1,
+  POPULATION: 20,
+}
