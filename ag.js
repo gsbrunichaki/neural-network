@@ -1,9 +1,12 @@
 const { chromosome, generateGenes } = require('./chromosome');
-const { maze, move } = require('./maze');
-const { MIN_WEIGHT, MAX_WEIGHT } = require('./config');
+const { INITIAL_FITNESS, MIN_WEIGHT, MAX_WEIGHT } = require('./config');
 
 const randomWeight = () => Math.random() * (MAX_WEIGHT - MIN_WEIGHT) + MIN_WEIGHT;
 
-generateGenes(chromosome, randomWeight);
+const crossover = (chromosome1, chromosome2) => chromosome1.map(
+  (gene1, indexGene2) => (gene1 + chromosome2[indexGene2]) / 2
+);
 
-console.log(chromosome);
+const fitness = (scores, initialScore) => scores.reduce(
+  (acc, cur) => acc - cur
+, initialScore);

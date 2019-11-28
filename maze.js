@@ -2,9 +2,10 @@ const { updatePosition, updatePathTraveled } = require('./chromosome');
 const scores = require('./scores');
 
 const notFirstElement = (_, index) => index > 0;
+
 const lineToArray = (line) => line.trim().split(' ');
-const withoutFirstLine = (lines) => lines.filter(notFirstElement);
-const arrayOfLines = (lines) => withoutFirstLine(lines).map(lineToArray);
+
+const arrayOfLines = (lines) => lines.filter(notFirstElement).map(lineToArray);
 
 const newPosition = (x, y, direction) => {
   switch (direction) {
@@ -16,6 +17,24 @@ const newPosition = (x, y, direction) => {
   }
 }
 
+const isBorderCollision = (maze, x, y, direction) => {
+  if (direction === 1 && x === 0) return true;
+  if (direction === 2 && y === maze.size-1) return true;
+  if (direction === 3 && x === maze.size-1) return true;
+  if (direction === 4 && y === 0) return true;
+
+  return false;
+}
+
+const isGameOver = (maze, x, y, direction) => {
+  const [newX, newY] = newPosition(x, y, direction);
+  
+  if (isBorderCollision(maze, x, y, direction)) return true;
+  if (maze.matrix[newX][newY] === '1') return true;
+
+  return false;
+}
+
 module.exports = {
   maze: {
     size: 0,
@@ -24,10 +43,7 @@ module.exports = {
   move: (maze, chromosome, direction) => {
     const [x, y] = chromosome.currentPosition;
 
-    if (direction === 1 && x === 0) return scores['1'];
-    if (direction === 2 && y === maze.size-1) return scores['1'];
-    if (direction === 3 && x === maze.size-1) return scores['1'];
-    if (direction === 4 && y === 0) return scores['1'];
+    if (isBorderCollision(maze, x, y, direction)) return scores['1'];
 
     const [newX, newY] = newPosition(x, y, direction);
     const newPositionData = maze.matrix[newX][newY];
